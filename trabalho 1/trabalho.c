@@ -100,58 +100,12 @@ int bissexto(int ano){
 }
 
 
-int q1(char data[])
-{
-  int datavalida = 1;
+int q1(char data[]){
 
-DataQuebrada DQ; quebraData(data);
-    DQ.iDia = 0;
-    DQ.iMes = 0;
-    DQ.iAno = 0;
-    DQ.valido = 0;
+DataQuebrada DQ = quebraData(data);
 
-    char *sDia = data;
-    char *sMes = NULL;
-    char *sAno = NULL;
 
-    int estado = 0;
-
-    int len =strlen(data);
-
-    for(int i = 0; i<len; i++){
-
-        if(data[i]== '/'){
-            data[i] = '\0';
-            sMes = &data[i + 1];
-            break;
-        }
-    }
-
-    if(sMes == NULL)return 0;
-
-    int len_resto = strlen(sMes);
-    for(int i = 0; i<len_resto; i++){
-        if(sMes[i] == '/'){
-            sMes[i] = '\0';
-            sAno = &sMes[i + 1];
-            break;
-        }
-    }
-
-    if(sAno == NULL)return 0;
-
-    int dia_len = strlen(sDia);
-    int mes_len = strlen(sMes);
-    int ano_len = strlen(sAno);
-
-    if(dia_len == 0 || dia_len > 2) return 0;
-    if(mes_len == 0 || mes_len > 2) return 0;
-    if(ano_len != 2 && ano_len != 4) return 0;
-
-    DQ.iDia = atoi(sDia);
-    DQ.iMes = atoi(sMes);
-    DQ.iAno = atoi(sAno);
-
+    if(DQ.valido == 0) return 0;
     if(DQ.iDia == 0 || DQ. iMes == 0) return 0;
 
     if(DQ.iAno < 100){
@@ -173,9 +127,9 @@ DataQuebrada DQ; quebraData(data);
     if(DQ.iDia > max_dias){
         return 0;
     }
+    DQ.valido = 1;
 
-  else
-      return 0;
+    return DQ.valido;
 }
 
 
@@ -194,8 +148,7 @@ DataQuebrada DQ; quebraData(data);
     4 -> datainicial > datafinal
     Caso o cálculo esteja correto, os atributos qtdDias, qtdMeses e qtdAnos devem ser preenchidos com os valores correspondentes.
  */
-DiasMesesAnos q2(char datainicial[], char datafinal[])
-{
+DiasMesesAnos q2(char datainicial[], char datafinal[]){
 
     //calcule os dados e armazene nas três variáveis a seguir
     DiasMesesAnos dma;
@@ -232,7 +185,26 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+    char atual;
+
+    if(isCaseSensitive!= 1){
+        if(c >= 'A' && c <= 'Z'){
+            c = c - 'A' + 'a';
+        }
+    }
+
+    for(int i = 0; texto[i] != '\0'; i++){
+            atual = texto[i];
+            if(isCaseSensitive != 1){
+                if(atual >= 'A' && atual <= 'Z'){
+                    atual = atual -'A' + 'a';
+                }
+            }
+            if(atual == c){
+                qtdOcorrencias ++;
+            }
+    }
 
     return qtdOcorrencias;
 }
@@ -255,6 +227,28 @@ int q3(char *texto, char c, int isCaseSensitive)
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
     int qtdOcorrencias = -1;
+    int tamTexto = strlen(strTexto);
+    int tamBusca = strlen(strBusca);
+    int k =0;
+
+    if(tamBusca == 0 || tamTexto == 0){
+        return 0;
+    }
+
+    for(int i =0; i <= tamTexto - tamBusca; i++){
+        int j;
+        for(j = 0; j< tamBusca; j++){
+            if(strTexto[i+j] != strBusca[j]){
+                break;
+            }
+        }
+        if( j== tamBusca){
+            posicoes[k] = i+1;
+            posicoes[k+1] = i + tamBusca;
+            k = k + 2;
+            qtdOcorrencias ++;
+        }
+    }
 
     return qtdOcorrencias;
 }
@@ -271,6 +265,7 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
+
 
     return num;
 }
