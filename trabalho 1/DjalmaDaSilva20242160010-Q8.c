@@ -36,7 +36,7 @@ int main(){
     imprimir_tabuleiro(tabuleiro, jogador_atual);
 
     if(estado_jogo == 1){
-        printf("Parabéns ao jogador %d ('%c') venceu!\n", jogador_atual, (jogador_atual == 1 ? 'x' : 'O' ));
+        printf("\nParabéns ao jogador %d ('%c') venceu!\n", jogador_atual, (jogador_atual == 1 ? 'x' : 'O' ));
     }else{
         printf("EMPATE!\n");
     }
@@ -75,7 +75,7 @@ void imprimir_tabuleiro(char tabuleiro[TAM][TAM], int jogador_atual){
     printf("\n");
 
     printf("jogador %d ('%c'), é a sua vez\n", jogador_atual,(jogador_atual == 1 ? 'X' : 'O'));
-    printf("informe sua jogada (EX: A1, B3)");
+    printf("informe sua jogada (EX: A1, B3)\n");
 
 }
 
